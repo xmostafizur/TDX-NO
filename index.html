@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transaction Interface</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    .container {
+      width: 90%;
+      max-width: 400px;
+      margin: 30px auto;
+      background: linear-gradient(to right, #FFA726 50%, #E60023 50%);
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      padding: 20px;
+      color: #fff;
+    }
+    .header {
+      font-size: 20px;
+      font-weight: bold;
+      background-color: #333;
+      padding: 15px;
+      border-radius: 5px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .instructions ul {
+      list-style-type: none;
+      padding: 0;
+      line-height: 1.8;
+    }
+    .instructions .highlight {
+      color: #FFD700;
+      font-weight: bold;
+    }
+    .instructions .copy-button {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #f8f8f8;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-top: 8px;
+    }
+    .instructions .copy-button span {
+      font-size: 14px;
+      color: #333;
+    }
+    .instructions .copy-button button {
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .input-group {
+      margin-bottom: 20px;
+    }
+    .input-group label {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+      color: #333;
+    }
+    .verify-button {
+      width: 100%;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .result-box {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f8f8f8;
+      color: #333;
+    }
+    .result-box.success {
+      border-color: #28a745;
+      color: #28a745;
+    }
+    .result-box.error {
+      border-color: #dc3545;
+      color: #dc3545;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">ট্রানজেকশন আইডি দিন</div>
+    <div class="instructions">
+      <ul>
+        <li><span class="highlight">Nagad/Bkash</span> এপস্য বা ডালার করে টাকা পাঠাতে হবে।</li>
+        <li>"<span class="highlight">Send Money</span>" ক্লিক করুন।</li>
+        <li>প্রাপকের নম্বর লিখুন: 
+          <div class="copy-button">
+            <span id="receiver-number">01987835776</span>
+            <button onclick="copyNumber()">Copy</button>
+          </div>
+        </li>
+        <li>টাকার পরিমাণ: <span class="highlight">0.1 টাকা</span></li>
+        <li>টাকা পাঠিয়ে আপনার সঠিক Transaction ID দিন এবং "VERIFY" চাপুন।</li>
+      </ul>
+    </div>
+    <div class="input-group">
+      <label for="transaction-id">ট্রানজেকশন আইডি</label>
+      <input type="text" id="transaction-id" placeholder="আপনার ট্রানজেকশন আইডি লিখুন">
+    </div>
+    <button class="verify-button" onclick="verifyTransaction()">VERIFY</button>
+    <div id="result-box" class="result-box"></div>
+  </div>
+
+  <script>
+    function copyNumber() {
+      const number = document.getElementById("receiver-number").innerText;
+      navigator.clipboard.writeText(number).then(() => {
+        alert("Number copied to clipboard!");
+      });
+    }
+
+    function verifyTransaction() {
+      const transactionId = document.getElementById("transaction-id").value.trim();
+      const resultBox = document.getElementById("result-box");
+
+      if (transactionId === "12345678") {
+        resultBox.style.display = "block";
+        resultBox.className = "result-box success";
+        resultBox.innerHTML = `
+          <div>Your Key: <strong>F12RT8HE3Y5E78LP7</strong></div>
+          <button onclick="copyKey()">Copy Key</button>
+        `;
+      } else {
+        resultBox.style.display = "block";
+        resultBox.className = "result-box error";
+        resultBox.innerHTML = "দুঃখিত, এই ট্রানজেকশন আইডি ভুল। দয়া করে সঠিক ট্রানজেকশন আইডি দিন।";
+      }
+    }
+
+    function copyKey() {
+      const key = "F12RT8HE3Y5E78LP7";
+      navigator.clipboard.writeText(key).then(() => {
+        alert("Key copied to clipboard!");
+      });
+    }
+  </script>
+</body>
+</html>
